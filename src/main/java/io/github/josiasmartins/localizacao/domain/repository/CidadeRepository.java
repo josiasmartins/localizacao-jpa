@@ -18,7 +18,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
     // busca pelo nome terminando por aquele pedaço
     List<Cidade> findByNomeEndingWith(String nome);
 
-
     // busca pelo like
     @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ") // ?!: primeiro parametro que vier na query
     List<Cidade> findByNomeLike(String nome);
@@ -28,4 +27,11 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
     List<Cidade> findByHabitantes(Long habitantes);
 
+    List<Cidade> findByHabitantesLessThan(Long habitantes);
+
+    List<Cidade> findByHabitantesGreaterThan(Long habitantes);
+
+    List<Cidade> findByHabitantesLessThanEquals(Long habitantes);
+
+    List<Cidade> findByHabitantesLessThanAndNomeLike(Long habitantes, String nome);
 }

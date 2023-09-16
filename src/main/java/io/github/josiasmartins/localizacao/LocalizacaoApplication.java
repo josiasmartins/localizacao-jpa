@@ -18,7 +18,14 @@ public class LocalizacaoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Inicializado!");
 //		salvarCidade();
-		listarCidadesPorNome();
+//		listarCidadesPorNome();
+
+		this.listarCidadesPorQuantidadeHabitantes();
+	}
+
+	void listarCidadesPorQuantidadeHabitantes() {
+		// TODO: verificr depois ->  No property 'lessThan' found for type 'Long'; Traversed path: Cidade.habitantes
+		cidadeRepository.findByHabitantesLessThanAndNomeLike(1223343434L, "%o%").forEach(System.out::println);
 	}
 
 	@Transactional
