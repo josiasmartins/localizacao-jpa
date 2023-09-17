@@ -2,7 +2,9 @@ package io.github.josiasmartins.localizacao.service;
 
 import io.github.josiasmartins.localizacao.domain.entity.Cidade;
 import io.github.josiasmartins.localizacao.domain.repository.CidadeRepository;
+import io.github.josiasmartins.localizacao.domain.repository.specs.CidadeSpecs;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,16 @@ public class CidadeService {
         return repository.findAll(example);
 //        return repository
 //                .findByHabitantesLessThanAndNomeLike(cidade.getHabitantes(), cidade.getNome());
+    }
+
+    public void listarCidadesByNomeSpecs() {
+        Specification<Cidade> spec = CidadeSpecs
+                .propertyEqual("nome", "sao paulo")
+                        .and(CidadeSpecs.propertyEqual("habitantes", 1000L));
+//                .nomeEqual("São Paulo")
+//                .or(CidadeSpecs.habitantesGreaterThan(1000));
+//                .and(CidadeSpecs.habitantesGreaterThan(1000));
+        repository.findAll(spec).forEach(System.out::println);
     }
 
 }
