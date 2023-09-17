@@ -2,8 +2,12 @@ package io.github.josiasmartins.localizacao.domain.repository;
 
 
 import io.github.josiasmartins.localizacao.domain.entity.Cidade;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 
 import java.util.List;
 
@@ -22,6 +26,14 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
     @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ") // ?!: primeiro parametro que vier na query
     List<Cidade> findByNomeLike(String nome);
 
+    // busca pelo nome like ordenado
+    @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ") // ?!: primeiro parametro que vier na query
+    List<Cidade> findByNomeLike(String nome, Sort sort);
+
+    // busca pelo nome like paginacao
+    @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ") // ?!: primeiro parametro que vier na query
+    Page<Cidade> findByNomeLike(String nome, Pageable pageable);
+
     // busca pelo nome contendo aquele pedaço
     List<Cidade> findByNomeContaining(String nome);
 
@@ -31,7 +43,7 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
     List<Cidade> findByHabitantesGreaterThan(Long habitantes);
 
-    List<Cidade> findByHabitantesLessThanEquals(Long habitantes);
+//    List<Cidade> findByHabitantesLessThanEquals(Long habitantes); // TODO: exception sql
 
     List<Cidade> findByHabitantesLessThanAndNomeLike(Long habitantes, String nome);
 }
